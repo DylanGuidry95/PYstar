@@ -26,11 +26,11 @@ def getcorrectpath(testcase):
         if testcase + "=answer=" in line:
             for i in range(0, len(line)):
                 value = ""
-                if line[i] == '<':
-                    while line[i] != '>':
+                if line[i] == '[':
+                    i = i + 1
+                    while line[i] != ']':
                         value = value + line[i]
                         i = i + 1
-                    value = value + line[i]
                     vectors.append(value)
     return vectors
 
@@ -89,14 +89,14 @@ def testastar(userpath, testid, answerfile):
     numcorrect = 0
     if userpath is not None:
         for node in range(0, len(userpath)):
-            if str(userpath[node].position) == correctpath[node]:
+            if str(userpath[node].value) == correctpath[node]:
                 numcorrect = numcorrect + 1
-            answerfile.write(str(userpath[node].position))
+            answerfile.write("[" + str(userpath[node].value) + "]")
     answerfile.write('\n')
     correctpercent = (float(numcorrect) / float(len(correctpath))) * 100
-    answerfile.write(str(testid) + "=answer=")
-    for vector in correctpath:
-        answerfile.write(vector)
+    answerfile.write(str(testid) + "===answer===")
+    for value in correctpath:
+        answerfile.write("[" + value + "]")
     answerfile.write('\n')
     answerfile.write("Correct:" + str(correctpercent))
     answerfile.write('\n')

@@ -11,27 +11,27 @@
 #Test to see if a path can be found when the nodes are three spaces apart
 #and in the middle of them is a 1 x 3 impassable wall
 ==>G:47;S:43;W:35;W:45;W:55;
-Test1=answer=<7,4><6,3><5,2><4,3><4,4><3,4>
+Test1=answer=[47][36][25][34][44][43]
 
 #Test2
 #Test to see if the nodes can travel from one corner to the another in this cases
 #the start node is <0,0> and the goal node is <9,9>
 ==>G:99;S:0;
-Test2=answer=<9,9><8,8><7,7><6,6><5,5><4,4><3,3><2,2><1,1><0,0>
+Test2=answer=[99][88][77][66][55][44][33][22][11][0]
 
 #Test3
 #Test if the goal node and start node are next to each other
 #Testing to ensure the horizontal or vertical gscore is set properly
 ==>G:0;S:1;
-Test3=answer=<0,0><1,0>
+Test3=answer=[0][1]
 
 #Test4
 #Test if the goal node and start node are next to each other
 #Testing to ensure the diagonal gscore is set properly
 ==>G:0;S:11;
-Test4=answer=<0,0><1,1>
+Test4=answer=[0][11]
 
 #Test5
 #Test if the start and goal node are the same
 ==>G:0;S:0;
-Test5=answer=<0,0>
+Test5=answer=[0]

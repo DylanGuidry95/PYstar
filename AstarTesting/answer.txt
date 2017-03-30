@@ -1,25 +1,25 @@
 ==>G:47;S:43;W:35;W:45;W:55;
-Test1=ReturnPath=<7,4><6,3><5,2><4,3><4,4><3,4>
-Test1=answer=<7,4><6,3><5,2><4,3><4,4><3,4>
+Test1=ReturnPath=[47][36][25][34][44][43]
+Test1===answer===[47][36][25][34][44][43]
 Correct:100.0
 
 ==>G:99;S:0;
-Test2=ReturnPath=<9,9><8,8><7,7><6,6><5,5><4,4><3,3><2,2><1,1><0,0>
-Test2=answer=<9,9><8,8><7,7><6,6><5,5><4,4><3,3><2,2><1,1><0,0>
+Test2=ReturnPath=[99][88][77][66][55][44][33][22][11][0]
+Test2===answer===[99][88][77][66][55][44][33][22][11][0]
 Correct:100.0
 
 ==>G:0;S:1;
-Test3=ReturnPath=<0,0><1,0>
-Test3=answer=<0,0><1,0>
+Test3=ReturnPath=[0][1]
+Test3===answer===[0][1]
 Correct:100.0
 
 ==>G:0;S:11;
-Test4=ReturnPath=<0,0><1,1>
-Test4=answer=<0,0><1,1>
+Test4=ReturnPath=[0][11]
+Test4===answer===[0][11]
 Correct:100.0
 
 ==>G:0;S:0;
-Test5=ReturnPath=<0,0>
-Test5=answer=<0,0>
+Test5=ReturnPath=[0]
+Test5===answer===[0]
 Correct:100.0
 
