@@ -1,0 +1,41 @@
+This document will outline how a student should structure
+his/her's AStar Algorithm application to be unit tested 
+properly with the test file provided.
+The application must consist of a Node class, Graph class,
+and Algorithm class.
+Below will be the required variables and functions that should
+be in each class. They are not limited to these variables. 
+
+Node class:
+	- value
+	- iswalkable
+	
+Graph class:
+	- list nodes
+	- getnode(value) 
+		- returns a node if a node with the value passed in is
+		found within the list of nodes
+
+AStar class:
+	- setstart(node) 
+		- sets the starting node for the algorithm
+	- setgoal(node)
+		- sets the end node for the algorithm
+	- algorithm()
+		- should return a list of nodes that is the path to
+		get from the starting node to the goal node		
+		
+		
+How to use the unit test file provided:
+- All nodes must have a value that is of type string and be numbered from
+0 - 99, where 0 = <0,0> 99 = <9, 9>
+- Nodes must be able to be toggle as iswalkable
+- The graph must have a way to get get a node from it based on the value we are searching for
+- You will need to import your module for your graph and astar classes
+- In the set up test cases function where the variable algo assign it the value of an instance
+of the astar class we are trying to test
+
+Other requirements:
+- The code must be written in the standard set forth by pylint.
+- Code must be ran against pylint and should have minimal to no 
+complaints with the code. 

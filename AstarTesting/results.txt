@@ -1,0 +1,40 @@
+{
+    name:Test1
+    case:S:43;G:47;W:35;W:45;W:55;
+    expected:[47][36][25][34][44][43]
+    result:[47][36][25][34][44][43]
+    pass:True
+}
+
+{
+    name:Test2
+    case:S:0;G:99;
+    expected:[99][88][77][66][55][44][33][22][11][0]
+    result:[99][88][77][66][55][44][33][22][11][0]
+    pass:True
+}
+
+{
+    name:Test3
+    case:S:1;G:0;
+    expected:[0][1]
+    result:[0][1]
+    pass:True
+}
+
+{
+    name:Test4
+    case:S:11;G:0;
+    expected:[0][11]
+    result:[0][11]
+    pass:True
+}
+
+{
+    name:Test5
+    case:S:0;G:0;
+    expected:[0]
+    result:[0]
+    pass:True
+}
+
