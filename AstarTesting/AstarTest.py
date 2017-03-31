@@ -1,18 +1,6 @@
 #pylint rate: 10/10
 '''File that handles the testing of the astar algorithm'''
-#Usage documentation
-#all nodes must have a value that is of type string and be numbered from
-#0 - 99, where 0 = <0,0> 99 = <9, 9>
-#Nodes must be able to be toggle as iswalkable
-#The graph must have a way to get get a node from it based on the value we are searching for
-
-#Required functions
-#======================
-#Graph -> getnode(nodevalue)
-#algorithm -> setstart(node)
-#algorithm -> setgoal(node)
-#algorithm -> algorithm() //this will return a path in the form of a list of nodes
-#algorithm -> must be able to store a refrence of a graph
+#Refer to Readme.txt in file for directions on how to use the unit test
 import re
 from vector import Vector2
 
@@ -50,58 +38,22 @@ class Node(object):
         self.value = value
         self.iswalkable = True
 
-    def getneighbors(self, graph):
-        '''Gets all the neighbors of this node in the graph passed in'''
-        neighbors = []
-        validpositions = []
-        validpositions.append(self.position + Vector2(1, 0)) #Right
-        validpositions.append(self.position + Vector2(1, 1)) #TopRight
-        validpositions.append(self.position + Vector2(0, 1)) #Top
-        validpositions.append(self.position + Vector2(-1, 1)) #TopLeft
-        validpositions.append(self.position + Vector2(-1, 0)) #Left
-        validpositions.append(self.position + Vector2(-1, -1)) #BotLeft
-        validpositions.append(self.position + Vector2(0, -1)) #Bot
-        validpositions.append(self.position + Vector2(1, -1)) #BotRight
-        for node in graph.nodes:
-            for position in validpositions:
-                if node.position == position:
-                    neighbors.append(node)
-        return neighbors
-
-    def calcgscore(self, node, inlist):
-        '''Calculates the gscore for the node based on the position of the node passed in'''
-        tentativeg = 0
-        if self.position.xpos == node.position.xpos or self.position.ypos == node.position.ypos:
-            tentativeg = 10
-        else:
-            tentativeg = 14
-        if not inlist:
-            self.gscore = node.gscore + tentativeg
-            self.parent = node
-        else:
-            if self.gscore > tentativeg:
-                self.gscore = node.gscore + tentativeg
-                self.parent = node
-
-    def calchscore(self, node):
-        '''Calculates the manhatan distance from this node to the node passed in'''
-        self.hscore = 10 * (abs(self.position.xpos - node.position.xpos) +
-                            abs(self.position.ypos - node.position.ypos))
-
-    def calcfscore(self):
-        '''Calculates the fscore for the current node'''
-        self.fscore = self.gscore + self.hscore
-
 class TestCase(object):
+    '''Stores all the data that defines a valid test case'''
     def __init__(self, name, case, answer):
         self.name = name
-        self.name = re.sub('name:', '', self.name)
+        self.name = re.sub('name:', "", self.name)
+        self.name = ''.join(self.name.split())
         self.case = case
-        self.case = re.sub('case:', '', self.case)
+        self.case = re.sub('case:', "", self.case)
+        self.case = ''.join(self.case.split())
         self.answer = answer
-        self.answer = re.sub('answer:', '', self.answer)
+        self.answer = re.sub('answer:', "", self.answer)
+        self.answer = ''.join(self.answer.split())
 
     def setupgraph(self):
+        '''Generates and returns a graph with all of the walls set up and the size of
+        the graph all test cases are going to be tested in a 10 x 10 grid'''
         graph = Graph(10, 10)
         for iterator in range(0, len(self.case)):
             if self.case[iterator] == 'W':
@@ -114,6 +66,7 @@ class TestCase(object):
         return graph
 
     def getstartandgoal(self):
+        '''Returns the start and goal nodes to be used in the algorithm'''
         start = ""
         goal = ""
         for iterator in range(0, len(self.case)):
@@ -134,6 +87,7 @@ class TestCase(object):
         return (start, goal)
 
     def getcorrectpath(self):
+        '''Gets the expected result for the the algorithm to return'''
         nodes = []
         for iterator in range(0, len(self.answer)):
             nodevalue = ""
@@ -147,15 +101,17 @@ class TestCase(object):
 
 
 class UnitTest(object):
+    '''Unit Test class responsible for setting up and testing the astar algorithm'''
     def __init__(self, testcasefile):
         self.start = None
         self.goal = None
         self.result = [None]
         self.testfile = open(testcasefile, "r")
         self.testcases = []
+        self.gentestcases()
 
     def gentestcases(self):
-        '''abc'''
+        '''Gets all the test cases from the test file specified'''
         linecount = 0
         lines = self.testfile.readlines()
         for line in lines:
@@ -177,18 +133,35 @@ class UnitTest(object):
                 self.testcases.append(TestCase(name, case, answer))
 
     def testastar(self, algorithm):
+        '''Loops through all of the testcases we have created and sets up
+        a graph based on the case specified in each test case. Returns the
+        results and prints them to a file stating weather the algorithm has passed
+        the specified case'''
         tests = []
-        for case in self.testcases:
-            enviorment = case.setupgraph()
-            points = case.getstartandgoal()
-            self.start = enviorment.getnode(points[0])
-            self.goal = enviorment.getnode(points[1])
-            path = algorithm(self.start, self.goal, enviorment)
-            correctanswer = case.getcorrectpath()
+        answersfile = open("results.txt", "w").close()
+        answersfile = open("results.txt", "a")
+        for testcase in self.testcases:
+            answersfile.write("{\n")
+            answersfile.write("    name:" + testcase.name + "\n")
+            answersfile.write("    case:" + testcase.case + "\n")
+            answersfile.write("    expected:" + testcase.answer + "\n")
+            environment = testcase.setupgraph()
+            points = testcase.getstartandgoal()
+            self.start = environment.getnode(points[0])
+            self.goal = environment.getnode(points[1])
+            path = algorithm(self.start, self.goal, environment)
+            response = ""
+            for node in path:
+                response += "[" + node.value + "]"
+            answersfile.write("    result:" + response + "\n")
+            correctanswer = testcase.getcorrectpath()
+            isvalid = True
             for iterator in range(0, len(correctanswer)):
                 if path[iterator].value != correctanswer[iterator]:
-                    tests.append(False)
+                    isvalid = False
                     continue
-            tests.append(True)
+            tests.append(isvalid)
+            answersfile.write("    pass:" + str(isvalid))
+            answersfile.write("\n}\n\n")
+        answersfile.close()
         return tests
-

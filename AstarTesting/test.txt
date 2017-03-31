@@ -2,9 +2,11 @@
 #G = Goal Node
 #S = Start Node
 #W = Non-walkable Node or Wall
-#New test cases are identified with the ==> and after each value must follow a ; even the last 
-#value in the line
-#Test(number)=answer= is the correct path we expect to be returned after the algorithm has completed
+#Test cases are broken up with the {}
+#Each test case has the following properties
+#name - name of the test
+#case - case we are testing against
+#answer - correct path to get from the start to goal
 #using '#' means this is a comment
 
 #Test1
@@ -12,17 +14,17 @@
 #and in the middle of them is a 1 x 3 impassable wall
 {
 	name:Test1
-	case:G:47;S:43;W:35;W:45;W:55;
+	case:S:43;G:47;W:35;W:45;W:55;
 	answer:[47][36][25][34][44][43]
 }
 
 
 #Test2
 #Test to see if the nodes can travel from one corner to the another in this cases
-#the start node is <0,0> and the goal node is <9,9>
+#the start node is 0 and the goal is 99
 {
 	name:Test2
-	case:G:99;S:0;
+	case:S:0;G:99;
 	answer:[99][88][77][66][55][44][33][22][11][0]
 }
 
@@ -32,7 +34,7 @@
 #Testing to ensure the horizontal or vertical gscore is set properly
 {
 	name:Test3
-	case:G:0;S:1;
+	case:S:1;G:0;
 	answer:[0][1]
 }
 
@@ -42,7 +44,7 @@
 #Testing to ensure the diagonal gscore is set properly
 {
 	name:Test4
-	case:G:0;S:11;
+	case:S:11;G:0;
 	answer:[0][11]
 }
 
@@ -51,7 +53,7 @@
 #Test if the start and goal node are the same
 {
 	name:Test5
-	case:G:0;S:0;
+	case:S:0;G:0;
 	answer:[0]
 }
 
